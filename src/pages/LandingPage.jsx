@@ -1,45 +1,13 @@
 import { useState } from 'react'
 import AboutSection from '../components/AboutSection'
 import JourneySection from '../components/JourneySection'
-import OperatorConsole from '../components/OperatorConsole'
 import ProjectsSection from '../components/ProjectsSection'
+import SystemSection from '../components/SystemSection'
 import TechMarquee from '../components/TechMarquee'
+import ToolkitRack from '../components/ToolkitRack'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
 import useTunisTime from '../hooks/useTunisTime'
 import { stats } from '../data/projects'
-
-const skillLayers = [
-  {
-    code: '01',
-    title: 'Interface',
-    items: ['Angular', 'ReactJS', 'Tailwind', 'Bootstrap', 'HTML5', 'CSS3'],
-  },
-  {
-    code: '02',
-    title: 'API & Logic',
-    items: ['Spring Boot', 'NestJS', '.NET', 'JavaScript (ES6)', 'Python', 'PHP', 'C++'],
-  },
-  {
-    code: '03',
-    title: 'Data',
-    items: ['PostgreSQL', 'MySQL', 'PL/SQL', 'MongoDB', 'Neo4j (NoSQL)'],
-  },
-  {
-    code: '04',
-    title: 'Infrastructure',
-    items: ['Docker', 'Kubernetes', 'Jenkins', 'CI/CD', 'Git/GitHub', 'Linux', 'Windows'],
-  },
-  {
-    code: '05',
-    title: 'Mobile',
-    items: ['Android', 'Xamarin', 'Flutter'],
-  },
-  {
-    code: '06',
-    title: 'Tooling',
-    items: ['Figma', 'LaTeX', 'Canva', 'Scrum / Agile', 'Word', 'PowerPoint'],
-  },
-]
 
 export default function LandingPage() {
   const [formState, setFormState] = useState('idle')
@@ -84,7 +52,7 @@ export default function LandingPage() {
         <div className="relative mx-auto grid w-full max-w-container-max grid-cols-1 items-center gap-12 px-margin-x lg:grid-cols-12">
           <div className="lg:col-span-7">
             <div className="animate-fade-in-up flex flex-wrap items-center gap-x-4 gap-y-2" style={{ animationDelay: '0.05s' }}>
-              <span className="eyebrow">Full-stack software engineer</span>
+              <span className="eyebrow">Drawing 001 / Full-stack engineer</span>
               <span className="hidden items-center gap-2 font-label-caps text-[8px] text-tertiary sm:flex">
                 <span className="status-dot" />
                 TUNIS, TUNISIA
@@ -102,8 +70,17 @@ export default function LandingPage() {
               </span>
             </h1>
 
+            <div
+              className="animate-fade-in-up mt-6 flex items-center gap-3 font-label-caps text-[8px] text-on-surface-variant/50"
+              style={{ animationDelay: '0.32s' }}
+            >
+              <span className="h-px w-8 bg-white/20" aria-hidden="true" />
+              <span>LOAD-BEARING SOFTWARE</span>
+              <span className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" aria-hidden="true" />
+            </div>
+
             <p
-              className="animate-fade-in-up mt-7 max-w-xl font-body-lg text-body-lg text-on-surface-variant"
+              className="animate-fade-in-up mt-5 max-w-xl font-body-lg text-body-lg text-on-surface-variant"
               style={{ animationDelay: '0.42s' }}
             >
               From the interface people click to the infrastructure they never see. I design, build
@@ -149,7 +126,7 @@ export default function LandingPage() {
           </div>
 
           <div className="animate-fade-in-up lg:col-span-5" style={{ animationDelay: '0.32s' }}>
-            <OperatorConsole />
+            <SystemSection />
           </div>
         </div>
 
@@ -191,53 +168,7 @@ export default function LandingPage() {
 
       <ProjectsSection />
 
-      {/* Skills */}
-      <section id="skills" className="reveal-on-scroll relative overflow-hidden bg-surface-container-lowest py-stack-lg">
-        <div className="pointer-events-none absolute -left-32 top-1/4 h-[420px] w-[420px] rounded-full bg-secondary/[0.08] blur-[150px]" aria-hidden="true" />
-        <div className="relative mx-auto max-w-container-max px-margin-x">
-          <header className="grid gap-8 lg:grid-cols-12 lg:items-end">
-            <div className="lg:col-span-7">
-              <span className="eyebrow">Layer 05 / Arsenal</span>
-              <h2 className="mt-5 font-display text-display-mobile md:text-display text-on-surface">
-                The toolkit, by <span className="font-serif-accent text-gradient">layer</span>.
-              </h2>
-            </div>
-            <p className="font-body-lg text-body-lg text-on-surface-variant lg:col-span-5">
-              Six layers mapped to the same stack I use to ship: interface, API, data,
-              infrastructure and the tools around them.
-            </p>
-          </header>
-
-          <div className="mt-12 border-t border-white/10">
-            {skillLayers.map((layer, index) => (
-              <div
-                key={layer.code}
-                className="reveal-child group relative grid grid-cols-1 gap-3 border-b border-white/10 py-6 transition-colors hover:bg-white/[0.02] md:grid-cols-[56px_220px_1fr] md:items-center md:gap-6"
-                style={{ transitionDelay: `${index * 60}ms` }}
-              >
-                <span
-                  className="absolute bottom-0 left-0 top-0 w-px origin-top scale-y-0 bg-gradient-to-b from-primary to-secondary transition-transform duration-500 group-hover:scale-y-100"
-                  aria-hidden="true"
-                />
-                <span className="font-label-caps text-[9px] text-primary/70">{layer.code}</span>
-                <h3 className="font-headline-sm text-[18px] text-on-surface transition-colors group-hover:text-primary">
-                  {layer.title}
-                </h3>
-                <div className="flex flex-wrap gap-1.5">
-                  {layer.items.map((item) => (
-                    <span
-                      key={item}
-                      className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 font-label-caps text-[9px] text-on-surface-variant transition-colors group-hover:border-white/[0.15]"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ToolkitRack />
 
       {/* Contact */}
       <section id="contact" className="reveal-on-scroll relative overflow-hidden bg-background py-stack-lg">

@@ -147,9 +147,24 @@ body {
   82% { opacity: 1; }
   100% { transform: translateY(26px); opacity: 0; }
 }
+@keyframes loadDrop {
+  0%, 100% { transform: translateY(0); opacity: 0.55; }
+  50% { transform: translateY(3px); opacity: 1; }
+}
+@keyframes moduleIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 .animate-fade-in-up { opacity: 0; animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 .animate-float { animation: float 6s ease-in-out infinite; }
+
+.load-arrow { display: inline-flex; animation: loadDrop 2.6s ease-in-out infinite; }
+.module-enter { animation: moduleIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.module-item { animation: moduleIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.hatch {
+  background-image: repeating-linear-gradient(135deg, rgba(233, 238, 251, 0.16) 0 1px, transparent 1px 6px);
+}
 
 .status-dot {
   display: inline-block;
