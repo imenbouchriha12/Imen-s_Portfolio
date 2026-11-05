@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
 
 const navItems = [
   { label: 'Home', href: '#home' },
@@ -15,88 +14,70 @@ export default function Navbar() {
   const [progress, setProgress] = useState(0)
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const location = useLocation()
-  const navigate = useNavigate()
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40)
+      setScrolled(window.scrollY > 50)
       const scrollable = document.documentElement.scrollHeight - window.innerHeight
       setProgress(scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0)
 
+      const sections = navItems.map((item) => document.getElementById(item.href.slice(1)))
       let current = ''
-      navItems.forEach((item) => {
-        const section = document.getElementById(item.href.slice(1))
-        if (section && section.getBoundingClientRect().top <= 160) current = item.href
-      })
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i]
+        if (section && section.getBoundingClientRect().top <= 150) {
+          current = navItems[i].href
+          break
+        }
+      }
       setActive(current)
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [location.pathname])
+  }, [])
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [mobileOpen])
 
-  const goTo = (href) => {
+  const scrollTo = (href) => {
     setMobileOpen(false)
-    const id = href.slice(1)
-    if (location.pathname !== '/') {
-      navigate(`/#${id}`)
-      return
-    }
-    const el = document.getElementById(id)
+    const el = document.querySelector(href)
     if (el) el.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'h-16 border-b border-white/10 bg-background/80 backdrop-blur-xl'
-          : 'h-20 border-b border-transparent bg-transparent'
+      className={`fixed top-0 w-full z-50 bg-surface/10 backdrop-blur-xl border-b border-white/10 transition-all duration-500 ease-in-out ${
+        scrolled ? 'h-16' : 'h-20'
       }`}
     >
       <div
-        className="absolute bottom-0 left-0 h-px bg-gradient-to-r from-primary via-secondary to-tertiary"
+        className="absolute top-0 left-0 h-[2px] bg-gradient-to-r from-primary to-secondary transition-[width] duration-150"
         style={{ width: `${progress}%` }}
         aria-hidden="true"
-      />
-
-      <div className="mx-auto flex h-full max-w-container-max items-center justify-between px-margin-x">
+      ></div>
+      <div className="max-w-container-max mx-auto px-margin-x flex justify-between items-center h-full">
         <a
           href="#home"
-          onClick={(e) => { e.preventDefault(); goTo('#home') }}
-          className="group flex items-center gap-3"
-          aria-label="Imen Bouchriha — home"
+          onClick={(e) => { e.preventDefault(); scrollTo('#home') }}
+          className="font-display text-headline-sm font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary"
         >
-          <span className="grid h-9 w-9 place-items-center rounded-lg border border-white/[0.15] bg-white/[0.03] font-display text-[15px] text-primary transition-colors group-hover:border-primary/50">
-            IB
-          </span>
-          <span className="hidden sm:block">
-            <span className="block font-label-caps text-[9px] tracking-[0.22em] text-on-surface">
-              IMEN BOUCHRIHA
-            </span>
-            <span className="mt-1 hidden font-label-caps text-[7px] tracking-[0.18em] text-on-surface-variant/60 lg:block">
-              FULL-STACK ENGINEER
-            </span>
-          </span>
+          Imen.Dev
         </a>
 
-        <nav className="hidden items-center gap-7 md:flex" aria-label="Main navigation">
+        <nav className="hidden md:flex gap-7" aria-label="Main navigation">
           {navItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
-              onClick={(e) => { e.preventDefault(); goTo(item.href) }}
-              aria-current={active === item.href ? 'page' : undefined}
-              className={`nav-link cursor-pointer font-label-caps text-[10px] transition-colors ${
+              onClick={(e) => { e.preventDefault(); scrollTo(item.href) }}
+              className={`font-label-caps text-label-caps transition-all cursor-pointer ${
                 active === item.href
-                  ? 'text-primary'
-                  : 'text-on-surface-variant hover:text-on-surface'
+                  ? 'text-primary border-b-2 border-primary pb-1'
+                  : 'text-on-surface/70 hover:text-on-surface'
               }`}
             >
               {item.label}
@@ -107,18 +88,17 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <a
             href="#contact"
-            onClick={(e) => { e.preventDefault(); goTo('#contact') }}
-            className="hidden items-center gap-2 rounded-full bg-gradient-to-r from-primary to-secondary px-5 py-2.5 font-label-caps text-[9px] font-bold text-on-primary-container transition-transform hover:scale-[1.03] sm:inline-flex"
+            onClick={(e) => { e.preventDefault(); scrollTo('#contact') }}
+            className="hidden sm:inline-flex font-label-caps text-label-caps bg-gradient-to-r from-primary to-secondary text-on-primary-container px-6 py-3 rounded-full hover:scale-105 transition-transform duration-300 font-bold shadow-lg shadow-primary/20"
           >
-            Let's talk
-            <span className="material-symbols-outlined text-[15px]">arrow_outward</span>
+            Hire Me
           </a>
           <button
             onClick={() => setMobileOpen((open) => !open)}
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-on-surface transition-colors hover:border-primary/50 md:hidden"
+            className="md:hidden w-11 h-11 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-on-surface hover:border-primary/50 transition-all"
           >
             <span className="material-symbols-outlined">{mobileOpen ? 'close' : 'menu'}</span>
           </button>
@@ -129,41 +109,28 @@ export default function Navbar() {
         <nav
           id="mobile-menu"
           aria-label="Mobile navigation"
-          className="animate-fade-in-up absolute inset-x-0 top-full border-b border-white/10 bg-surface-container-lowest px-margin-x py-4 shadow-2xl md:hidden"
-          style={{ animationDuration: '0.28s' }}
+          className="md:hidden absolute top-full left-0 right-0 bg-surface-container-lowest shadow-2xl border-b border-white/10 px-margin-x py-6 flex flex-col gap-2 animate-fade-in-up"
         >
-          {navItems.map((item, index) => (
+          {navItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
-              onClick={(e) => { e.preventDefault(); goTo(item.href) }}
-              aria-current={active === item.href ? 'page' : undefined}
-              className="flex items-center justify-between border-b border-white/5 py-3.5"
+              onClick={(e) => { e.preventDefault(); scrollTo(item.href) }}
+              className={`px-4 py-3 rounded-xl font-label-caps text-label-caps transition-all ${
+                active === item.href
+                  ? 'bg-primary/10 text-primary border border-primary/30'
+                  : 'text-on-surface/80 hover:bg-white/5'
+              }`}
             >
-              <span className="flex items-center gap-3">
-                <span className="font-label-caps text-[8px] text-primary/60">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <span
-                  className={`font-label-caps text-[10px] ${
-                    active === item.href ? 'text-primary' : 'text-on-surface'
-                  }`}
-                >
-                  {item.label}
-                </span>
-              </span>
-              <span className="material-symbols-outlined text-[16px] text-on-surface-variant/40">
-                arrow_outward
-              </span>
+              {item.label}
             </a>
           ))}
           <a
             href="#contact"
-            onClick={(e) => { e.preventDefault(); goTo('#contact') }}
-            className="mt-4 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary to-secondary py-3 font-label-caps text-[9px] font-bold text-on-primary-container"
+            onClick={(e) => { e.preventDefault(); scrollTo('#contact') }}
+            className="mt-2 text-center font-label-caps text-label-caps bg-gradient-to-r from-primary to-secondary text-on-primary-container px-6 py-3 rounded-xl font-bold"
           >
-            Let's talk
-            <span className="material-symbols-outlined text-[15px]">arrow_outward</span>
+            Hire Me
           </a>
         </nav>
       )}
