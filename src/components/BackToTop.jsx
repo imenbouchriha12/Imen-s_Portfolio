@@ -14,11 +14,12 @@ export default function BackToTop() {
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       aria-label="Back to top"
-      className={`fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full glass-card bg-surface-container/80 flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary-container transition-all duration-300 ${
-        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+      tabIndex={visible ? 0 : -1}
+      className={`fixed bottom-5 right-5 z-40 grid h-11 w-11 place-items-center rounded-full border border-white/[0.15] bg-background/80 text-on-surface backdrop-blur-xl transition-all duration-300 hover:border-primary hover:text-primary ${
+        visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'
       }`}
     >
-      <span className="material-symbols-outlined">arrow_upward</span>
+      <span className="material-symbols-outlined text-[18px]">arrow_upward</span>
     </button>
   )
 }

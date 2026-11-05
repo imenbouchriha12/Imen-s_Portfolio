@@ -39,72 +39,102 @@ export default function ProjectModal({ project, onClose }) {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 modal-backdrop"
+      className="modal-backdrop fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-labelledby="project-modal-title"
+      aria-describedby="project-modal-description"
       onClick={onClose}
     >
       <div
         ref={panelRef}
-        className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-3xl glass-panel modal-panel shadow-2xl"
+        className="modal-panel corner-frame relative max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-2xl border border-white/10 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           ref={closeRef}
           onClick={onClose}
-          aria-label="Close project details"
-          className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-background/70 backdrop-blur-md border border-white/15 flex items-center justify-center text-on-surface hover:bg-primary hover:text-on-primary-container hover:border-primary transition-all"
+          aria-label="Close case file"
+          className="absolute right-4 top-4 z-20 flex items-center gap-2 rounded-full border border-white/[0.15] bg-background/70 px-3 py-2 text-on-surface backdrop-blur-md transition-colors hover:border-primary hover:bg-primary hover:text-on-primary-container"
         >
-          <span className="material-symbols-outlined">close</span>
+          <span className="material-symbols-outlined text-[18px]">close</span>
+          <span className="hidden font-label-caps text-[8px] sm:inline">ESC</span>
         </button>
 
-        <div className="grid lg:grid-cols-2">
-          <div className="relative h-56 sm:h-72 lg:h-auto lg:min-h-[520px] overflow-hidden">
+        <div className="grid lg:grid-cols-[0.92fr_1.08fr]">
+          <div className="relative h-60 overflow-hidden sm:h-80 lg:h-auto lg:min-h-[560px]">
             <img
               src={project.image}
               alt={`${project.title} — ${project.subtitle}`}
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-background/80" />
-            <div className="absolute bottom-4 left-4 flex flex-wrap gap-2">
-              {project.categories.map((c) => (
-                <span key={c} className="px-3 py-1 rounded-full bg-background/70 backdrop-blur-md border border-primary/30 text-primary font-label-caps text-[10px]">
-                  {c}
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-background/70" />
+
+            <div className="absolute inset-x-0 top-0 flex items-center justify-between p-5 font-label-caps text-[8px] text-on-surface">
+              <span>CASE_FILE / {project.year}</span>
+              <span className="flex items-center gap-2 text-tertiary">
+                <span className="status-dot" />
+                SHIPPED
+              </span>
+            </div>
+
+            <div className="absolute inset-x-5 bottom-5 flex flex-wrap gap-2">
+              {project.categories.map((category) => (
+                <span
+                  key={category}
+                  className="rounded-full border border-primary/30 bg-background/70 px-3 py-1 font-label-caps text-[8px] text-primary backdrop-blur-md"
+                >
+                  {category}
                 </span>
               ))}
             </div>
           </div>
 
           <div className="p-6 sm:p-8 lg:p-10">
-            <p className="font-label-caps text-label-caps text-secondary mb-3">
+            <p className="font-label-caps text-[9px] text-tertiary">
               {project.year} · {project.role}
             </p>
-            <h3 id="project-modal-title" className="font-headline-lg text-headline-lg text-on-surface mb-1">
+            <h3 id="project-modal-title" className="mt-3 font-display text-[42px] leading-none text-on-surface">
               {project.title}
             </h3>
-            <p className="font-body-md text-body-md text-primary/80 mb-6">{project.subtitle}</p>
-            <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-8">
+            <p className="mt-2 font-body-md text-[15px] text-primary/80">{project.subtitle}</p>
+            <p id="project-modal-description" className="mt-6 font-body-md text-[14px] leading-relaxed text-on-surface-variant">
               {project.description}
             </p>
 
-            <h4 className="font-label-caps text-label-caps text-primary mb-4">What I built</h4>
-            <ul className="space-y-3 mb-8">
-              {project.details.map((detail) => (
-                <li key={detail} className="flex gap-3 font-body-md text-body-md text-on-surface-variant">
-                  <span className="material-symbols-outlined text-primary text-[18px] mt-0.5">check_circle</span>
-                  <span>{detail}</span>
-                </li>
-              ))}
-            </ul>
-
-            <h4 className="font-label-caps text-label-caps text-primary mb-4">Tech stack</h4>
-            <div className="flex flex-wrap gap-2 mb-8">
-              {project.tags.map((tag) => (
-                <span key={tag} className="px-3 py-1.5 rounded-full border border-white/10 bg-white/5 font-label-caps text-[10px] text-on-surface-variant">
-                  {tag}
+            <div className="mt-8">
+              <div className="mb-4 flex items-center gap-3">
+                <h4 className="font-label-caps text-[9px] text-primary">WHAT I BUILT</h4>
+                <span className="h-px flex-1 bg-white/10" />
+                <span className="font-label-caps text-[8px] text-on-surface-variant/50">
+                  {String(project.details.length).padStart(2, '0')}
                 </span>
-              ))}
+              </div>
+              <ul className="space-y-3">
+                {project.details.map((detail) => (
+                  <li key={detail} className="flex gap-3 font-body-md text-[14px] leading-relaxed text-on-surface-variant">
+                    <span className="mt-[8px] h-1 w-1 shrink-0 rounded-full bg-primary" aria-hidden="true" />
+                    <span>{detail}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-8">
+              <div className="mb-4 flex items-center gap-3">
+                <h4 className="font-label-caps text-[9px] text-primary">TECH_STACK</h4>
+                <span className="h-px flex-1 bg-white/10" />
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 font-label-caps text-[9px] text-on-surface-variant"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
 
             {project.links?.github && (
@@ -112,10 +142,10 @@ export default function ProjectModal({ project, onClose }) {
                 href={project.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-primary to-secondary text-on-primary-container font-label-caps text-label-caps font-bold hover:scale-105 transition-transform"
+                className="mt-9 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-secondary px-6 py-3 font-label-caps text-[9px] font-bold text-on-primary-container transition-transform hover:scale-[1.03]"
               >
-                View on GitHub
-                <span className="material-symbols-outlined text-[18px]">arrow_outward</span>
+                Open repository
+                <span className="material-symbols-outlined text-[16px]">arrow_outward</span>
               </a>
             )}
           </div>

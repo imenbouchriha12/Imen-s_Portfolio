@@ -46,29 +46,35 @@ const education = [
   },
 ]
 
-function TimelineCard({ period, title, place, summary, tags, latest }) {
+function TimelineCard({ period, title, place, summary, tags, latest, index, last }) {
   return (
-    <li className="relative pl-8 pb-10 last:pb-0">
-      <span className="absolute left-0 top-1 w-3.5 h-3.5 rounded-full bg-gradient-to-r from-primary to-secondary shadow-[0_0_18px_rgba(251,171,255,0.6)]"></span>
-      <span className="absolute left-[6px] top-6 bottom-0 w-px bg-gradient-to-b from-white/20 to-transparent"></span>
-      <div className="glass-card rounded-xl p-5 hover:border-primary/40 transition-all">
-        <div className="flex flex-wrap items-center gap-2 mb-2">
-          <span className="font-label-caps text-[10px] text-secondary">{period}</span>
+    <li
+      className="reveal-child relative pb-8 pl-7 last:pb-0"
+      style={{ transitionDelay: `${120 + index * 90}ms` }}
+    >
+      <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary ring-4 ring-primary/10" aria-hidden="true" />
+      {!last && (
+        <span className="absolute bottom-0 left-[3.5px] top-5 w-px bg-gradient-to-b from-primary/40 via-white/[0.12] to-transparent" aria-hidden="true" />
+      )}
+
+      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5 transition-colors hover:border-primary/30 hover:bg-white/[0.04]">
+        <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+          <span className="font-label-caps text-[9px] text-tertiary">{period}</span>
           {latest && (
-            <span className="px-2 py-0.5 rounded-full bg-primary/10 border border-primary/30 text-primary font-label-caps text-[9px]">
-              LATEST
+            <span className="rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 font-label-caps text-[8px] text-primary">
+              CURRENT
             </span>
           )}
         </div>
-        <h4 className="font-headline-sm text-[17px] text-on-surface">{title}</h4>
-        <p className="font-body-md text-sm text-primary/80 mb-2">{place}</p>
-        <p className="font-body-md text-sm text-on-surface-variant leading-relaxed">{summary}</p>
+        <h4 className="font-headline-sm text-[18px] leading-snug text-on-surface">{title}</h4>
+        <p className="mb-2 mt-1 font-label-caps text-[9px] text-primary/80">{place}</p>
+        <p className="font-body-md text-[14px] leading-relaxed text-on-surface-variant">{summary}</p>
         {tags && (
-          <div className="flex flex-wrap gap-1.5 mt-3">
+          <div className="mt-3 flex flex-wrap gap-1.5">
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="px-2 py-0.5 rounded-full border border-white/10 bg-white/5 font-label-caps text-[9px] text-on-surface-variant"
+                className="rounded-full border border-white/10 bg-white/[0.03] px-2 py-0.5 font-label-caps text-[9px] text-on-surface-variant"
               >
                 {tag}
               </span>
@@ -80,45 +86,57 @@ function TimelineCard({ period, title, place, summary, tags, latest }) {
   )
 }
 
+function ColumnLabel({ children, count }) {
+  return (
+    <div className="mb-7 flex items-center gap-3">
+      <h3 className="font-label-caps text-[10px] text-on-surface">{children}</h3>
+      <span className="h-px flex-1 bg-white/10" />
+      <span className="font-label-caps text-[8px] text-on-surface-variant/50">{count}</span>
+    </div>
+  )
+}
+
 export default function JourneySection() {
   return (
-    <section className="relative py-stack-lg bg-surface-container-lowest overflow-hidden reveal-on-scroll" id="journey">
-      <div className="absolute top-1/3 -right-32 w-[420px] h-[420px] bg-primary/10 blur-[140px] rounded-full pointer-events-none"></div>
-      <div className="max-w-container-max mx-auto px-margin-x">
-        <header className="mb-12">
-          <span className="text-primary font-label-caps text-label-caps">THE ROAD SO FAR</span>
-          <h2 className="font-display text-display-mobile md:text-display mt-2 mb-4">
-            Experience &amp;{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-              Education
-            </span>
+    <section id="journey" className="reveal-on-scroll relative overflow-hidden bg-surface-container-lowest py-stack-lg">
+      <div className="pointer-events-none absolute -right-32 top-1/3 h-[420px] w-[420px] rounded-full bg-primary/10 blur-[150px]" aria-hidden="true" />
+      <div className="relative mx-auto max-w-container-max px-margin-x">
+        <header className="mb-12 max-w-3xl">
+          <span className="eyebrow">Layer 03 / Trajectory</span>
+          <h2 className="mt-5 font-display text-display-mobile md:text-display text-on-surface">
+            Every role added a <span className="font-serif-accent text-gradient">layer</span>.
           </h2>
-          <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+          <p className="mt-5 max-w-2xl font-body-lg text-body-lg text-on-surface-variant">
             Three internships, two degrees and a lot of shipped code — the path that shaped how I
             build software today.
           </p>
         </header>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
-            <h3 className="font-headline-sm text-headline-sm text-on-surface flex items-center gap-3 mb-8">
-              <span className="material-symbols-outlined text-primary">work</span>
-              Professional Experience
-            </h3>
+            <ColumnLabel count="03 ROLES">[ PROFESSIONAL ]</ColumnLabel>
             <ul>
-              {experience.map((item) => (
-                <TimelineCard key={item.title + item.period} {...item} />
+              {experience.map((item, index) => (
+                <TimelineCard
+                  key={item.title + item.period}
+                  {...item}
+                  index={index}
+                  last={index === experience.length - 1}
+                />
               ))}
             </ul>
           </div>
           <div>
-            <h3 className="font-headline-sm text-headline-sm text-on-surface flex items-center gap-3 mb-8">
-              <span className="material-symbols-outlined text-secondary">school</span>
-              Education
-            </h3>
+            <ColumnLabel count="03 DEGREES">[ EDUCATION ]</ColumnLabel>
             <ul>
               {education.map((item, index) => (
-                <TimelineCard key={item.title} {...item} latest={index === 0} />
+                <TimelineCard
+                  key={item.title}
+                  {...item}
+                  latest={index === 0}
+                  index={index}
+                  last={index === education.length - 1}
+                />
               ))}
             </ul>
           </div>
