@@ -27,6 +27,46 @@ body { background-color: #0b1326; color: #dae2fd; overflow-x: hidden; }
   color: #fbabff;
 }
 
+.hero-vignette {
+  background:
+    radial-gradient(ellipse 78% 68% at 50% 42%, transparent 32%, rgba(11, 19, 38, 0.5) 100%),
+    linear-gradient(180deg, rgba(11, 19, 38, 0.4) 0%, transparent 28%, transparent 68%, #0b1326 100%);
+}
+.hero-ring {
+  border-radius: 9999px;
+  background: conic-gradient(
+    from 0deg,
+    rgba(251, 171, 255, 0) 0deg,
+    rgba(251, 171, 255, 0.6) 80deg,
+    rgba(208, 188, 255, 0.1) 160deg,
+    rgba(251, 171, 255, 0) 240deg
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1.5px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 1.5px));
+  animation: ringSpin 9s linear infinite, heroFade 1s ease 0.35s both;
+}
+.hero-ring--dashed {
+  background: none;
+  -webkit-mask: none;
+  mask: none;
+  border: 1px dashed rgba(255, 255, 255, 0.16);
+  animation: ringSpin 30s linear infinite reverse, heroFade 1s ease 0.5s both;
+}
+.hero-ring--dashed::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: #fbabff;
+  box-shadow: 0 0 14px rgba(251, 171, 255, 0.9);
+  transform: translateX(-50%);
+}
+@keyframes ringSpin { to { transform: rotate(360deg); } }
+@keyframes heroFade { from { opacity: 0; } to { opacity: 1; } }
+
 .reveal-on-scroll { opacity: 0; transform: translateY(50px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
 .reveal-on-scroll.active { opacity: 1; transform: translateY(0); }
 

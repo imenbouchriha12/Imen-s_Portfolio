@@ -185,18 +185,26 @@ export default function LandingPage() {
         <div className="absolute inset-0 z-0 opacity-40">
           <canvas ref={canvasRef} id="shader-canvas-ANIMATION_3" style={{ display: 'block', width: '100%', height: '100%' }} />
         </div>
+        <div className="hero-vignette pointer-events-none absolute inset-0 z-0" aria-hidden="true" />
+
         <div className="relative z-20 max-w-container-max mx-auto px-margin-x flex flex-col items-center justify-center text-center">
           <div className="animate-fade-in-up mb-stack-md" style={{ animationDelay: '0.1s' }}>
             <div className="relative group">
+              <div className="hero-ring hero-ring--dashed absolute -inset-6" aria-hidden="true" />
+              <div className="hero-ring absolute -inset-1.5" aria-hidden="true" />
               <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-full blur opacity-25 group-hover:opacity-60 transition duration-1000"></div>
               <div className="relative w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-white/10 glass-card">
                 <img alt="Imen Bouchriha Portfolio Avatar" className="w-full h-full object-cover" src="/imen.png" />
               </div>
             </div>
+            <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/25 px-4 py-2 backdrop-blur-md">
+              <span className="status-dot" />
+              <span className="font-label-caps text-[8px] text-on-surface/75">ENGINEERING @ ESPRIT · TUNIS</span>
+            </div>
           </div>
           <div className="max-w-3xl animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
             <h1 className="font-display text-display-mobile md:text-display mb-4 text-on-surface">
-              Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Imen Bouchriha</span>
+              Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary drop-shadow-[0_0_28px_rgba(251,171,255,0.25)]">Imen Bouchriha</span>
             </h1>
             <h2 ref={typingRef} className="font-headline-sm text-headline-sm text-primary/80 mb-6 min-h-[1.4em] typing-cursor" id="typing-subtext"></h2>
             <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto mb-10">
@@ -204,18 +212,27 @@ export default function LandingPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <a className="group relative px-8 py-4 rounded-full bg-gradient-to-r from-primary to-secondary overflow-hidden hover:scale-105 transition-transform duration-300 shadow-xl shadow-primary/10" href="#projects">
-                <span className="relative z-10 font-label-caps text-label-caps text-on-primary-container font-bold">View Projects</span>
+                <span className="relative z-10 flex items-center gap-2 font-label-caps text-label-caps text-on-primary-container font-bold">
+                  View Projects
+                  <span className="material-symbols-outlined text-[16px] transition-transform group-hover:translate-y-0.5">south</span>
+                </span>
                 <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
               </a>
-              <a className="glass-card glass-glow px-8 py-4 rounded-full font-label-caps text-label-caps text-on-surface hover:text-primary transition-all duration-300 font-bold border border-white/10" href="#contact">
+              <a className="group glass-card glass-glow px-8 py-4 rounded-full font-label-caps text-label-caps text-on-surface hover:text-primary transition-all duration-300 font-bold border border-white/10 flex items-center gap-2" href="#contact">
                 Contact Me
+                <span className="material-symbols-outlined text-[16px] transition-transform group-hover:-translate-y-0.5">north_east</span>
               </a>
             </div>
           </div>
-          <a className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-50 hover:opacity-100 transition-opacity" href="#about">
-            <span className="material-symbols-outlined text-4xl text-primary">expand_more</span>
-          </a>
         </div>
+
+        <a
+          className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 animate-bounce opacity-50 hover:opacity-100 transition-opacity"
+          href="#about"
+          aria-label="Scroll to about section"
+        >
+          <span className="material-symbols-outlined text-4xl text-primary">expand_more</span>
+        </a>
       </section>
 
       {/* Key numbers */}
