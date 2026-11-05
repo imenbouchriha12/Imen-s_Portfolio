@@ -1,45 +1,13 @@
 import { useState } from 'react'
 import AboutSection from '../components/AboutSection'
 import JourneySection from '../components/JourneySection'
-import OperatorConsole from '../components/OperatorConsole'
+import MasterySection from '../components/MasterySection'
 import ProjectsSection from '../components/ProjectsSection'
+import ShaderHero from '../components/ShaderHero'
 import TechMarquee from '../components/TechMarquee'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
 import useTunisTime from '../hooks/useTunisTime'
 import { stats } from '../data/projects'
-
-const skillLayers = [
-  {
-    code: '01',
-    title: 'Interface',
-    items: ['Angular', 'ReactJS', 'Tailwind', 'Bootstrap', 'HTML5', 'CSS3'],
-  },
-  {
-    code: '02',
-    title: 'API & Logic',
-    items: ['Spring Boot', 'NestJS', '.NET', 'JavaScript (ES6)', 'Python', 'PHP', 'C++'],
-  },
-  {
-    code: '03',
-    title: 'Data',
-    items: ['PostgreSQL', 'MySQL', 'PL/SQL', 'MongoDB', 'Neo4j (NoSQL)'],
-  },
-  {
-    code: '04',
-    title: 'Infrastructure',
-    items: ['Docker', 'Kubernetes', 'Jenkins', 'CI/CD', 'Git/GitHub', 'Linux', 'Windows'],
-  },
-  {
-    code: '05',
-    title: 'Mobile',
-    items: ['Android', 'Xamarin', 'Flutter'],
-  },
-  {
-    code: '06',
-    title: 'Tooling',
-    items: ['Figma', 'LaTeX', 'Canva', 'Scrum / Agile', 'Word', 'PowerPoint'],
-  },
-]
 
 export default function LandingPage() {
   const [formState, setFormState] = useState('idle')
@@ -72,95 +40,7 @@ export default function LandingPage() {
 
   return (
     <main id="main" className="relative min-h-screen">
-      {/* Hero */}
-      <section
-        id="home"
-        className="relative flex min-h-[100svh] items-center overflow-hidden pb-16 pt-28 md:pt-32"
-      >
-        <div className="blueprint-grid pointer-events-none absolute inset-0" aria-hidden="true" />
-        <div className="pointer-events-none absolute -top-40 left-1/2 h-[560px] w-[820px] -translate-x-1/2 rounded-full bg-primary/[0.09] blur-[170px]" aria-hidden="true" />
-        <div className="pointer-events-none absolute -bottom-24 right-0 h-[420px] w-[420px] rounded-full bg-secondary/[0.08] blur-[150px]" aria-hidden="true" />
-
-        <div className="relative mx-auto grid w-full max-w-container-max grid-cols-1 items-center gap-12 px-margin-x lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <div className="animate-fade-in-up flex flex-wrap items-center gap-x-4 gap-y-2" style={{ animationDelay: '0.05s' }}>
-              <span className="eyebrow">Full-stack software engineer</span>
-              <span className="hidden items-center gap-2 font-label-caps text-[8px] text-tertiary sm:flex">
-                <span className="status-dot" />
-                TUNIS, TUNISIA
-              </span>
-            </div>
-
-            <h1 className="hero-title mt-6 font-display text-on-surface">
-              <span className="hero-line">
-                <span style={{ animationDelay: '0.12s' }}>I build systems</span>
-              </span>
-              <span className="hero-line">
-                <span style={{ animationDelay: '0.22s' }}>
-                  that <span className="font-serif-accent text-gradient">hold</span>.
-                </span>
-              </span>
-            </h1>
-
-            <p
-              className="animate-fade-in-up mt-7 max-w-xl font-body-lg text-body-lg text-on-surface-variant"
-              style={{ animationDelay: '0.42s' }}
-            >
-              From the interface people click to the infrastructure they never see. I design, build
-              and ship full-stack products with React, Angular, NestJS, Spring Boot and .NET.
-            </p>
-
-            <div
-              className="animate-fade-in-up mt-9 flex flex-col gap-3 sm:flex-row"
-              style={{ animationDelay: '0.52s' }}
-            >
-              <a
-                href="#projects"
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary to-secondary px-7 py-3.5 font-label-caps text-[9px] font-bold text-on-primary-container shadow-lg shadow-primary/10 transition-transform hover:scale-[1.03]"
-              >
-                Explore case files
-                <span className="material-symbols-outlined text-[16px] transition-transform group-hover:translate-y-0.5">
-                  south
-                </span>
-              </a>
-              <a
-                href="/cv.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center gap-2 rounded-full border border-white/[0.15] bg-white/[0.03] px-7 py-3.5 font-label-caps text-[9px] text-on-surface transition-colors hover:border-primary/40 hover:text-primary"
-              >
-                Download CV
-                <span className="material-symbols-outlined text-[16px] transition-transform group-hover:translate-y-0.5">
-                  download
-                </span>
-              </a>
-            </div>
-
-            <div
-              className="animate-fade-in-up mt-10 flex flex-wrap items-center gap-x-4 gap-y-2"
-              style={{ animationDelay: '0.62s' }}
-            >
-              <span className="font-label-caps text-[8px] text-on-surface-variant/50">CURRENTLY</span>
-              <span className="h-px w-6 bg-white/[0.15]" aria-hidden="true" />
-              <span className="font-label-caps text-[9px] text-on-surface-variant">
-                Engineering @ ESPRIT · TWIN speciality
-              </span>
-            </div>
-          </div>
-
-          <div className="animate-fade-in-up lg:col-span-5" style={{ animationDelay: '0.32s' }}>
-            <OperatorConsole />
-          </div>
-        </div>
-
-        <a
-          href="#about"
-          className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 items-center gap-2 font-label-caps text-[8px] text-on-surface-variant/60 transition-colors hover:text-primary md:flex"
-        >
-          SCROLL TO EXPLORE
-          <span className="material-symbols-outlined animate-bounce text-[16px]">south</span>
-        </a>
-      </section>
+      <ShaderHero />
 
       {/* Key numbers */}
       <section className="relative border-y border-white/10 bg-surface-container-lowest py-10" aria-label="Key numbers">
@@ -191,53 +71,7 @@ export default function LandingPage() {
 
       <ProjectsSection />
 
-      {/* Skills */}
-      <section id="skills" className="reveal-on-scroll relative overflow-hidden bg-surface-container-lowest py-stack-lg">
-        <div className="pointer-events-none absolute -left-32 top-1/4 h-[420px] w-[420px] rounded-full bg-secondary/[0.08] blur-[150px]" aria-hidden="true" />
-        <div className="relative mx-auto max-w-container-max px-margin-x">
-          <header className="grid gap-8 lg:grid-cols-12 lg:items-end">
-            <div className="lg:col-span-7">
-              <span className="eyebrow">Layer 05 / Arsenal</span>
-              <h2 className="mt-5 font-display text-display-mobile md:text-display text-on-surface">
-                The toolkit, by <span className="font-serif-accent text-gradient">layer</span>.
-              </h2>
-            </div>
-            <p className="font-body-lg text-body-lg text-on-surface-variant lg:col-span-5">
-              Six layers mapped to the same stack I use to ship: interface, API, data,
-              infrastructure and the tools around them.
-            </p>
-          </header>
-
-          <div className="mt-12 border-t border-white/10">
-            {skillLayers.map((layer, index) => (
-              <div
-                key={layer.code}
-                className="reveal-child group relative grid grid-cols-1 gap-3 border-b border-white/10 py-6 transition-colors hover:bg-white/[0.02] md:grid-cols-[56px_220px_1fr] md:items-center md:gap-6"
-                style={{ transitionDelay: `${index * 60}ms` }}
-              >
-                <span
-                  className="absolute bottom-0 left-0 top-0 w-px origin-top scale-y-0 bg-gradient-to-b from-primary to-secondary transition-transform duration-500 group-hover:scale-y-100"
-                  aria-hidden="true"
-                />
-                <span className="font-label-caps text-[9px] text-primary/70">{layer.code}</span>
-                <h3 className="font-headline-sm text-[18px] text-on-surface transition-colors group-hover:text-primary">
-                  {layer.title}
-                </h3>
-                <div className="flex flex-wrap gap-1.5">
-                  {layer.items.map((item) => (
-                    <span
-                      key={item}
-                      className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 font-label-caps text-[9px] text-on-surface-variant transition-colors group-hover:border-white/[0.15]"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <MasterySection />
 
       {/* Contact */}
       <section id="contact" className="reveal-on-scroll relative overflow-hidden bg-background py-stack-lg">
