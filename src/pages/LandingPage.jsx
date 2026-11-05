@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import ProjectsSection from '../components/ProjectsSection'
 import JourneySection from '../components/JourneySection'
 import TechMarquee from '../components/TechMarquee'
+import HoloCard from '../components/HoloCard'
 import { stats } from '../data/projects'
 
 const skillCategories = [
@@ -145,27 +146,6 @@ export default function LandingPage() {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active')
-
-          if (entry.target.id === 'about') {
-            const glassCard = entry.target.querySelector('.glass-panel')
-            if (glassCard) {
-              const onMove = (e) => {
-                const rect = glassCard.getBoundingClientRect()
-                const x = e.clientX - rect.left
-                const y = e.clientY - rect.top
-                const centerX = rect.width / 2
-                const centerY = rect.height / 2
-                const rotateX = (y - centerY) / 20
-                const rotateY = (centerX - x) / 20
-                glassCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
-              }
-              const onLeave = () => {
-                glassCard.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`
-              }
-              glassCard.addEventListener('mousemove', onMove)
-              glassCard.addEventListener('mouseleave', onLeave)
-            }
-          }
 
           if (entry.target.id === 'projects') {
             entry.target.querySelectorAll('.reveal-item').forEach((item, i) => {
@@ -325,28 +305,43 @@ export default function LandingPage() {
         <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-secondary/10 blur-[120px] rounded-full -z-10"></div>
         <div className="max-w-container-max mx-auto px-margin-x">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
-            <div className="lg:col-span-5 order-2 lg:order-1">
-              <div className="glass-panel p-8 rounded-3xl shine-effect shadow-2xl relative">
-                <div className="aspect-square rounded-2xl mb-8 overflow-hidden border border-white/10 bg-surface-container-high">
-                  <img className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" src="/imen.png" alt="Imen Bouchriha" />
-                </div>
-                <div className="space-y-4">
+            <div className="lg:col-span-5">
+              <div className="flex justify-center">
+                <HoloCard
+                  image="/imen.png"
+                  alt="Portrait of Imen Bouchriha"
+                  preset="shards"
+                  foilColor="#d0bcff"
+                  intensity={0.42}
+                  edgeSparkle={0.3}
+                  frame={3}
+                  glare={0.35}
+                  tiltMax={10}
+                  hoverScale={1.03}
+                  radius={18}
+                  width={390}
+                  idle
+                  shadow
+                />
+              </div>
+              <div className="mt-10 space-y-4 text-center lg:text-left">
+                <div>
                   <h3 className="font-headline-sm text-headline-sm text-primary">Imen Bouchriha</h3>
-                  <p className="font-label-caps text-label-caps text-on-surface/50">SOFTWARE ENGINEER &bull; TUNISIA</p>
-                  <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                    Full-stack developer from Tunisia, focused on building products that are as solid under the hood as they look on screen — from multi-tenant SaaS architectures to AI-powered automation.
-                  </p>
-                  <div className="flex gap-4 pt-4">
-                    <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="https://github.com/imenbouchriha12" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                      <span className="material-symbols-outlined">terminal</span>
-                    </a>
-                    <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="https://www.linkedin.com/in/bouchriha-imen-99077823b" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                      <span className="material-symbols-outlined">link</span>
-                    </a>
-                    <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="mailto:imenbouchriha5@gmail.com" aria-label="Email">
-                      <span className="material-symbols-outlined">mail</span>
-                    </a>
-                  </div>
+                  <p className="mt-1 font-label-caps text-[10px] text-on-surface-variant/60">SOFTWARE ENGINEER &middot; TUNISIA</p>
+                </div>
+                <p className="max-w-md mx-auto lg:mx-0 font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                  Full-stack developer from Tunisia, focused on building products that are as solid under the hood as they look on screen — from multi-tenant SaaS architectures to AI-powered automation.
+                </p>
+                <div className="flex gap-4 pt-1 justify-center lg:justify-start">
+                  <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="https://github.com/imenbouchriha12" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <span className="material-symbols-outlined">terminal</span>
+                  </a>
+                  <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="https://www.linkedin.com/in/bouchriha-imen-99077823b" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <span className="material-symbols-outlined">link</span>
+                  </a>
+                  <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="mailto:imenbouchriha5@gmail.com" aria-label="Email">
+                    <span className="material-symbols-outlined">mail</span>
+                  </a>
                 </div>
               </div>
             </div>
