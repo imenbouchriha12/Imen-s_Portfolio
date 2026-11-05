@@ -15,7 +15,12 @@ const skillCategories = [
   { icon: 'dns', title: 'Systems', items: ['Windows', 'Linux'] },
 ]
 
-const aboutSkills = ['Angular', 'Spring Boot', 'React', 'NestJS', '.NET', 'Docker', 'Kubernetes', 'OpenAI']
+const workflow = [
+  { code: '01', title: 'Discover', text: 'Map the workflow, the users and the edge cases before touching the schema.' },
+  { code: '02', title: 'Architect', text: 'Draw the data model and API boundaries so the system stays coherent as it grows.' },
+  { code: '03', title: 'Build', text: 'Ship thin slices from interface to database, tested as they go.' },
+  { code: '04', title: 'Operate', text: 'Deploy with Docker, watch the metrics, and tighten what they expose.' },
+]
 
 export default function LandingPage() {
   const canvasRef = useRef(null)
@@ -109,11 +114,6 @@ export default function LandingPage() {
           entry.target.classList.add('active')
 
           if (entry.target.id === 'about') {
-            const skillTags = entry.target.querySelectorAll('.skill-tag')
-            skillTags.forEach((tag, i) => {
-              setTimeout(() => tag.classList.add('visible'), i * 100)
-            })
-
             const glassCard = entry.target.querySelector('.glass-panel')
             if (glassCard) {
               const onMove = (e) => {
@@ -287,17 +287,28 @@ export default function LandingPage() {
                 </div>
               </div>
               <div className="space-y-8">
-                <h2 className="font-headline-lg text-headline-lg text-on-surface flex items-center gap-3">
-                  <span className="material-symbols-outlined text-primary">architecture</span>
-                  Technical Arsenal
-                </h2>
-                <div className="flex flex-wrap gap-4" id="skill-container">
-                  {aboutSkills.map((skill) => (
-                    <div key={skill} className="skill-tag px-6 py-3 rounded-full border border-white/10 bg-white/5 font-label-caps text-label-caps text-secondary hover:bg-secondary/20 hover:border-secondary transition-all cursor-default">
-                      {skill}
-                    </div>
-                  ))}
+                <div className="flex flex-wrap items-end justify-between gap-3">
+                  <h2 className="font-headline-lg text-headline-lg text-on-surface flex items-center gap-3">
+                    <span className="material-symbols-outlined text-primary">route</span>
+                    How I work
+                  </h2>
+                  <span className="font-label-caps text-[9px] text-on-surface-variant/60">FIRST CALL &rarr; PRODUCTION</span>
                 </div>
+                <ol className="how-rail relative max-w-2xl">
+                  {workflow.map((step) => (
+                    <li key={step.code} className="how-step group relative pb-8 pl-14 last:pb-0">
+                      <span className="absolute left-0 top-0 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-surface-container font-label-caps text-[10px] text-on-surface-variant transition-colors duration-300 group-hover:border-primary/60 group-hover:text-primary">
+                        {step.code}
+                      </span>
+                      <h3 className="pt-1.5 font-headline-sm text-[19px] text-on-surface transition-colors group-hover:text-primary">
+                        {step.title}
+                      </h3>
+                      <p className="mt-2 max-w-xl font-body-md text-[15px] leading-relaxed text-on-surface-variant">
+                        {step.text}
+                      </p>
+                    </li>
+                  ))}
+                </ol>
               </div>
             </div>
           </div>

@@ -138,6 +138,27 @@ body { background-color: #0b1326; color: #dae2fd; overflow-x: hidden; }
 }
 .skill-card:hover .material-symbols-outlined { transform: scale(1.1); filter: drop-shadow(0 0 8px rgba(251, 171, 255, 0.6)); }
 
+.how-rail::before {
+  content: "";
+  position: absolute;
+  left: 19px;
+  top: 20px;
+  bottom: 20px;
+  width: 1px;
+  background: linear-gradient(180deg, rgba(251, 171, 255, 0.55), rgba(208, 188, 255, 0.3), rgba(173, 198, 255, 0.12));
+}
+.how-step {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll.active .how-step { opacity: 1; transform: none; }
+.how-step:nth-child(2) { transition-delay: 0.1s; }
+.how-step:nth-child(3) { transition-delay: 0.2s; }
+.how-step:nth-child(4) { transition-delay: 0.3s; }
+
 .btn-shimmer {
   background: linear-gradient(90deg, #fbabff, #d0bcff, #fbabff);
   background-size: 200% 100%;
