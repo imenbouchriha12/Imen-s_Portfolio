@@ -1,31 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-
-const projects = [
-  {
-    title: 'NovEntra',
-    description: 'A SaaS enterprise management platform built with a multi-tenant architecture, centralizing and automating key business processes.',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80',
-    tags: ['REACT', 'NESTJS', 'POSTGRESQL', 'DOCKER', 'KUBERNETES'],
-    details: [
-      'Multi-tenant architecture ensuring strict data isolation and security between organizations.',
-      'Centralized management of commercial activities, invoicing, expenses, and customer relationships.',
-      'Built with React for a modern, responsive UI and NestJS for a scalable, maintainable backend.',
-      'Deployed with Docker and Kubernetes for orchestration, scalability, and high availability.',
-    ],
-  },
-  {
-    title: 'Smiters',
-    description: 'An AI-powered automated email management platform that generates intelligent responses using a knowledge base.',
-    image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&q=80',
-    tags: ['ANGULAR', 'SPRING BOOT', 'MYSQL', 'OPENAI'],
-    details: [
-      'Automated customer email response system leveraging OpenAI and a structured knowledge base.',
-      'Reduces email processing time while improving customer satisfaction and service responsiveness.',
-      'Knowledge base containing product info, company policies, FAQs, and relevant business data.',
-      'Built with Angular, Spring Boot, and MySQL for a robust full-stack solution.',
-    ],
-  },
-]
+import ProjectsSection from '../components/ProjectsSection'
+import JourneySection from '../components/JourneySection'
+import TechMarquee from '../components/TechMarquee'
+import { stats } from '../data/projects'
 
 const skillCategories = [
   { icon: 'code', title: 'Languages', items: ['C++', 'Python', 'PHP', 'JavaScript (ES6)', 'HTML5', 'CSS3'] },
@@ -38,14 +15,12 @@ const skillCategories = [
   { icon: 'dns', title: 'Systems', items: ['Windows', 'Linux'] },
 ]
 
-const skillTags = ['React', 'Node.js', 'Python', 'AWS', 'TypeScript', 'GraphQL', 'TailwindCSS', 'Docker']
+const aboutSkills = ['Angular', 'Spring Boot', 'React', 'NestJS', '.NET', 'Docker', 'Kubernetes', 'OpenAI']
 
 export default function LandingPage() {
   const canvasRef = useRef(null)
   const typingRef = useRef(null)
-  const formRef = useRef(null)
   const [formState, setFormState] = useState('idle')
-  const [expanded, setExpanded] = useState(null)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -204,7 +179,7 @@ export default function LandingPage() {
   }
 
   return (
-    <main className="relative min-h-screen">
+    <main className="relative min-h-screen" id="main">
       {/* Hero Section */}
       <section className="relative z-10 w-full h-screen overflow-hidden flex items-center justify-center" id="home">
         <div className="absolute inset-0 z-0 opacity-40">
@@ -243,6 +218,22 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Key numbers */}
+      <section className="relative z-10 border-y border-white/5 bg-surface-container-lowest/70" aria-label="Key numbers">
+        <div className="max-w-container-max mx-auto px-margin-x py-10 grid grid-cols-2 md:grid-cols-4 gap-8">
+          {stats.map((stat) => (
+            <div key={stat.label} className="text-center">
+              <p className="font-display text-[34px] md:text-[42px] leading-none text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                {stat.value}
+              </p>
+              <p className="font-label-caps text-[10px] text-on-surface-variant mt-2">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <TechMarquee />
+
       {/* About Section */}
       <section className="relative py-stack-lg bg-surface-container-lowest overflow-hidden reveal-on-scroll" id="about">
         <div className="absolute top-20 -left-20 w-[400px] h-[400px] bg-primary/10 blur-[100px] rounded-full -z-10"></div>
@@ -258,16 +249,16 @@ export default function LandingPage() {
                   <h3 className="font-headline-sm text-headline-sm text-primary">Imen Bouchriha</h3>
                   <p className="font-label-caps text-label-caps text-on-surface/50">SOFTWARE ENGINEER &bull; TUNISIA</p>
                   <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                    As a dedicated software developer, I specialize in building full-stack web applications that are both visually engaging and technically solid. My work spans the entire development lifecycle — from designing responsive frontend interfaces to architecting scalable backend services.
+                    Full-stack developer from Tunisia, focused on building products that are as solid under the hood as they look on screen — from multi-tenant SaaS architectures to AI-powered automation.
                   </p>
                   <div className="flex gap-4 pt-4">
-                    <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="#">
+                    <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="https://github.com/imenbouchriha12" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                       <span className="material-symbols-outlined">terminal</span>
                     </a>
-                    <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="#">
+                    <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="https://www.linkedin.com/in/bouchriha-imen-99077823b" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                       <span className="material-symbols-outlined">link</span>
                     </a>
-                    <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="#">
+                    <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="mailto:imenbouchriha5@gmail.com" aria-label="Email">
                       <span className="material-symbols-outlined">mail</span>
                     </a>
                   </div>
@@ -288,7 +279,10 @@ export default function LandingPage() {
                 </h2>
                 <div className="font-body-lg text-body-lg text-on-surface-variant space-y-4 max-w-2xl">
                   <p>
-                    As a dedicated software developer, I specialize in building full-stack web applications that are both visually engaging and technically solid. My work spans the entire development lifecycle — from designing responsive frontend interfaces to architecting scalable backend services.
+                    I design and build full-stack applications end to end: responsive front-ends, resilient APIs, and the infrastructure that keeps them running. I care about clean architecture, performance, and the small details that make a product feel effortless.
+                  </p>
+                  <p>
+                    My favourite problems live where product thinking meets engineering — multi-tenant platforms, real-time workflows, and AI features that genuinely save people time.
                   </p>
                 </div>
               </div>
@@ -298,7 +292,7 @@ export default function LandingPage() {
                   Technical Arsenal
                 </h2>
                 <div className="flex flex-wrap gap-4" id="skill-container">
-                  {skillTags.map((skill) => (
+                  {aboutSkills.map((skill) => (
                     <div key={skill} className="skill-tag px-6 py-3 rounded-full border border-white/10 bg-white/5 font-label-caps text-label-caps text-secondary hover:bg-secondary/20 hover:border-secondary transition-all cursor-default">
                       {skill}
                     </div>
@@ -310,66 +304,9 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Projects Section */}
-      <section className="relative py-stack-lg bg-background reveal-on-scroll" id="projects">
-        <div className="max-w-container-max mx-auto px-margin-x">
-          <header className="mb-stack-lg">
-            <h1 className="font-display text-display-mobile md:text-display text-on-surface mb-stack-sm">
-              Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Projects</span>
-            </h1>
-            <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
-              A selection of architectural software solutions and high-performance applications designed with precision, scalability, and aesthetic excellence.
-            </p>
-          </header>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-gutter" id="project-grid">
-            {projects.map((project) => {
-              const isOpen = expanded === project.title
-              return (
-              <article key={project.title} className="project-card reveal-item">
-                <div className="card-inner glass-card relative overflow-hidden rounded-xl flex flex-col shine-effect glass-glow">
-                  <div className="h-48 overflow-hidden relative">
-                    <img alt={project.title} className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" src={project.image} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
-                  </div>
-                  <div className="p-stack-md flex-grow flex flex-col">
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tags.map((tag) => (
-                        <span key={tag} className="px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary font-label-caps text-[10px]">{tag}</span>
-                      ))}
-                    </div>
-                    <h3 className="font-headline-sm text-headline-sm text-on-surface mb-2">{project.title}</h3>
-                    <p className="font-body-md text-body-md text-on-surface-variant mb-4">{project.description}</p>
-                    {isOpen && (
-                      <div className="mb-4 space-y-2 animate-fade-in-up">
-                        <h4 className="font-label-caps text-label-caps text-primary">Key Features & Technical Details</h4>
-                        <ul className="space-y-1.5">
-                          {project.details.map((d, i) => (
-                            <li key={i} className="font-body-md text-body-md text-on-surface-variant flex gap-2">
-                              <span className="text-primary mt-1">▸</span>
-                              <span>{d}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    <div className="mt-auto">
-                      <button onClick={() => setExpanded(isOpen ? null : project.title)} className="w-full py-3 px-4 rounded-lg bg-white/5 border border-white/10 hover:bg-primary hover:text-on-primary-container hover:border-primary transition-all duration-300 font-label-caps text-label-caps flex items-center justify-center gap-2 group">
-                        {isOpen ? 'Show Less' : 'View Details'} <span className={`material-symbols-outlined text-[18px] transition-transform ${isOpen ? 'rotate-180' : 'group-hover:translate-x-1'}`}>{isOpen ? 'expand_less' : 'arrow_forward'}</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </article>
-              )
-            })}
-          </div>
-          <div className="text-center mt-12">
-            <button className="glass-card px-10 py-4 rounded-full font-label-caps text-label-caps text-on-surface hover:text-primary hover:border-primary/50 transition-all font-bold group">
-              Explore All Projects <span className="material-symbols-outlined align-middle ml-2 group-hover:rotate-45 transition-transform">rocket_launch</span>
-            </button>
-          </div>
-        </div>
-      </section>
+      <JourneySection />
+
+      <ProjectsSection />
 
       {/* Skills & Contact Section */}
       <section className="relative py-stack-lg bg-surface-container-lowest reveal-on-scroll" id="skills">

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
+import JourneySection from '../components/JourneySection'
 
-const skillTags = ['React', 'Node.js', 'Python', 'AWS', 'TypeScript', 'GraphQL', 'TailwindCSS', 'Docker']
+const aboutSkills = ['Angular', 'Spring Boot', 'React', 'NestJS', '.NET', 'Docker', 'Kubernetes', 'OpenAI']
 
 export default function AboutPage() {
   useEffect(() => {
@@ -47,7 +48,7 @@ export default function AboutPage() {
   }, [])
 
   return (
-    <main className="pt-32 pb-stack-lg relative min-h-screen">
+    <main className="pt-32 pb-stack-lg relative min-h-screen" id="main">
       <div className="absolute top-20 -left-20 w-[400px] h-[400px] bg-primary/10 blur-[100px] rounded-full -z-10"></div>
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-secondary/10 blur-[120px] rounded-full -z-10"></div>
       <section className="max-w-container-max mx-auto px-margin-x">
@@ -61,16 +62,16 @@ export default function AboutPage() {
                 <h3 className="font-headline-sm text-headline-sm text-primary">Imen Bouchriha</h3>
                 <p className="font-label-caps text-label-caps text-on-surface/50">SOFTWARE ENGINEER &bull; TUNISIA</p>
                 <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                  As a dedicated software developer, I specialize in building full-stack web applications that are both visually engaging and technically solid. My work spans the entire development lifecycle — from designing responsive frontend interfaces to architecting scalable backend services.
+                  Full-stack developer from Tunisia, focused on building products that are as solid under the hood as they look on screen — from multi-tenant SaaS architectures to AI-powered automation.
                 </p>
                 <div className="flex gap-4 pt-4">
-                  <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="#">
+                  <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="https://github.com/imenbouchriha12" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                     <span className="material-symbols-outlined">terminal</span>
                   </a>
-                  <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="#">
+                  <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="https://www.linkedin.com/in/bouchriha-imen-99077823b" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                     <span className="material-symbols-outlined">link</span>
                   </a>
-                  <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="#">
+                  <a className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-primary/20 hover:border-primary transition-all text-on-surface" href="mailto:imenbouchriha5@gmail.com" aria-label="Email">
                     <span className="material-symbols-outlined">mail</span>
                   </a>
                 </div>
@@ -91,7 +92,10 @@ export default function AboutPage() {
               </h2>
               <div className="font-body-lg text-body-lg text-on-surface-variant space-y-4 max-w-2xl">
                 <p>
-                  As a dedicated software developer, I specialize in building full-stack web applications that are both visually engaging and technically solid. My work spans the entire development lifecycle — from designing responsive frontend interfaces to architecting scalable backend services.
+                  I design and build full-stack applications end to end: responsive front-ends, resilient APIs, and the infrastructure that keeps them running. I care about clean architecture, performance, and the small details that make a product feel effortless.
+                </p>
+                <p>
+                  My favourite problems live where product thinking meets engineering — multi-tenant platforms, real-time workflows, and AI features that genuinely save people time.
                 </p>
               </div>
             </div>
@@ -101,7 +105,7 @@ export default function AboutPage() {
                 Technical Arsenal
               </h2>
               <div className="flex flex-wrap gap-4" id="skill-container">
-                {skillTags.map((skill) => (
+                {aboutSkills.map((skill) => (
                   <div key={skill} className="skill-tag px-6 py-3 rounded-full border border-white/10 bg-white/5 font-label-caps text-label-caps text-secondary hover:bg-secondary/20 hover:border-secondary transition-all cursor-default">
                     {skill}
                   </div>
@@ -111,6 +115,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      <JourneySection />
     </main>
   )
 }
