@@ -25,6 +25,7 @@ const workflow = [
 export default function LandingPage() {
   const canvasRef = useRef(null)
   const typingRef = useRef(null)
+  const visualRef = useRef(null)
   const [formState, setFormState] = useState('idle')
 
   useEffect(() => {
@@ -108,6 +109,38 @@ export default function LandingPage() {
   }, [])
 
   useEffect(() => {
+    const el = visualRef.current
+    if (!el) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (!window.matchMedia('(hover: hover)').matches) return
+
+    let frame
+    const onMove = (e) => {
+      const rect = el.getBoundingClientRect()
+      const x = (e.clientX - rect.left) / rect.width - 0.5
+      const y = (e.clientY - rect.top) / rect.height - 0.5
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
+        el.style.setProperty('--rx', `${(-y * 5).toFixed(2)}deg`)
+        el.style.setProperty('--ry', `${(x * 7).toFixed(2)}deg`)
+      })
+    }
+    const onLeave = () => {
+      cancelAnimationFrame(frame)
+      el.style.setProperty('--rx', '0deg')
+      el.style.setProperty('--ry', '0deg')
+    }
+
+    el.addEventListener('pointermove', onMove)
+    el.addEventListener('pointerleave', onLeave)
+    return () => {
+      cancelAnimationFrame(frame)
+      el.removeEventListener('pointermove', onMove)
+      el.removeEventListener('pointerleave', onLeave)
+    }
+  }, [])
+
+  useEffect(() => {
     const revealCallback = (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -181,47 +214,82 @@ export default function LandingPage() {
   return (
     <main className="relative min-h-screen" id="main">
       {/* Hero Section */}
-      <section className="relative z-10 w-full h-screen overflow-hidden flex items-center justify-center pt-20" id="home">
+      <section className="hero relative z-10 w-full min-h-[100svh] overflow-hidden flex items-center pt-24 pb-16 lg:pt-28 lg:pb-20" id="home">
         <div className="absolute inset-0 z-0 opacity-40">
           <canvas ref={canvasRef} id="shader-canvas-ANIMATION_3" style={{ display: 'block', width: '100%', height: '100%' }} />
         </div>
         <div className="hero-vignette pointer-events-none absolute inset-0 z-0" aria-hidden="true" />
+        <div className="hero-grid pointer-events-none absolute inset-0 z-0" aria-hidden="true" />
 
-        <div className="relative z-20 max-w-container-max mx-auto px-margin-x flex flex-col items-center justify-center text-center">
-          <div className="animate-fade-in-up mb-stack-md" style={{ animationDelay: '0.1s' }}>
-            <div className="relative group">
-              <div className="hero-ring hero-ring--dashed absolute -inset-6" aria-hidden="true" />
-              <div className="hero-ring absolute -inset-1.5" aria-hidden="true" />
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-full blur opacity-25 group-hover:opacity-60 transition duration-1000"></div>
-              <div className="relative w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-white/10 glass-card">
-                <img alt="Imen Bouchriha Portfolio Avatar" className="w-full h-full object-cover" src="/imen.png" />
-              </div>
-            </div>
-            <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/25 px-4 py-2 backdrop-blur-md">
-              <span className="status-dot" />
-              <span className="font-label-caps text-[8px] text-on-surface/75">ENGINEERING @ ESPRIT · TUNIS</span>
-            </div>
-          </div>
-          <div className="max-w-3xl animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <h1 className="font-display text-display-mobile md:text-display mb-4 text-on-surface">
-              Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary drop-shadow-[0_0_28px_rgba(251,171,255,0.25)]">Imen Bouchriha</span>
+        <div className="relative z-20 mx-auto w-full max-w-container-max px-margin-x grid lg:grid-cols-12 items-center gap-10 lg:gap-8">
+          <div className="lg:col-span-7 order-2 lg:order-1 text-center lg:text-left">
+            <p className="eyebrow animate-fade-in-up justify-center lg:justify-start" style={{ animationDelay: '0.05s' }}>
+              Engineering @ ESPRIT &middot; Tunis
+            </p>
+
+            <h1 className="mt-6 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
+              <span className="hero-greet block">Hi, I'm</span>
+              <span className="hero-name text-gradient block">Imen</span>
+              <span className="hero-name hero-name--serif block">Bouchriha</span>
             </h1>
-            <h2 ref={typingRef} className="font-headline-sm text-headline-sm text-primary/80 mb-6 min-h-[1.4em] typing-cursor" id="typing-subtext"></h2>
-            <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto mb-10">
+
+            <div className="hero-role mt-6 lg:mt-7 animate-fade-in-up" style={{ animationDelay: '0.28s' }}>
+              <span className="hero-role-prompt" aria-hidden="true">&gt;_</span>
+              <h2 ref={typingRef} className="typing-cursor min-h-[1.4em] text-primary/85" id="typing-subtext"></h2>
+            </div>
+
+            <p className="mt-4 lg:mt-5 max-w-md mx-auto lg:mx-0 font-body-md md:text-body-lg text-on-surface-variant animate-fade-in-up" style={{ animationDelay: '0.38s' }}>
               Building digital experiences with precision, playfulness, and high-performance code.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <a className="group relative px-8 py-4 rounded-full bg-gradient-to-r from-primary to-secondary overflow-hidden hover:scale-105 transition-transform duration-300 shadow-xl shadow-primary/10" href="#projects">
+
+            <div className="mt-8 lg:mt-9 flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-5 animate-fade-in-up" style={{ animationDelay: '0.46s' }}>
+              <a className="group relative px-5 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-primary to-secondary overflow-hidden hover:scale-105 transition-transform duration-300 shadow-xl shadow-primary/10" href="#projects">
                 <span className="relative z-10 flex items-center gap-2 font-label-caps text-label-caps text-on-primary-container font-bold">
                   View Projects
                   <span className="material-symbols-outlined text-[16px] transition-transform group-hover:translate-y-0.5">south</span>
                 </span>
                 <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
               </a>
-              <a className="group glass-card glass-glow px-8 py-4 rounded-full font-label-caps text-label-caps text-on-surface hover:text-primary transition-all duration-300 font-bold border border-white/10 flex items-center gap-2" href="#contact">
+              <a className="group glass-card glass-glow px-5 sm:px-8 py-3.5 sm:py-4 rounded-full font-label-caps text-label-caps text-on-surface hover:text-primary transition-all duration-300 font-bold border border-white/10 flex items-center gap-2" href="#contact">
                 Contact Me
                 <span className="material-symbols-outlined text-[16px] transition-transform group-hover:-translate-y-0.5">north_east</span>
               </a>
+            </div>
+
+            <div className="hero-meta mt-9 animate-fade-in-up" style={{ animationDelay: '0.54s' }}>
+              <span>Full-stack developer</span>
+              <span className="hero-meta-dot" aria-hidden="true" />
+              <span>React &middot; Spring &middot; PostgreSQL</span>
+            </div>
+          </div>
+
+          <div className="lg:col-span-5 order-1 lg:order-2">
+            <div ref={visualRef} className="hero-visual relative mx-auto w-[230px] sm:w-[310px] md:w-[340px] lg:w-full lg:max-w-[350px] xl:max-w-[390px]">
+              <div className="hero-frame" aria-hidden="true" />
+              <div className="hero-glow" aria-hidden="true" />
+              <div className="hero-window-in">
+                <figure className="hero-window">
+                  <div className="hero-window-bar">
+                    <span className="hero-window-path">~/imen-bouchriha</span>
+                    <span className="hero-window-live">
+                      <span className="status-dot" />
+                      live
+                    </span>
+                  </div>
+                  <div className="hero-window-screen">
+                    <img alt="Portrait of Imen Bouchriha" className="hero-portrait" src="/imen.png" />
+                    <span className="hero-scanline" aria-hidden="true" />
+                  </div>
+                  <div className="hero-window-footer">
+                    {['Interface', 'API', 'Data', 'Infra'].map((layer, i) => (
+                      <div className="hero-layer" key={layer} style={{ '--layer-delay': `${i * 0.5}s` }}>
+                        <span className="hero-layer-bar" aria-hidden="true" />
+                        <span className="hero-layer-label">{layer}</span>
+                      </div>
+                    ))}
+                  </div>
+                </figure>
+              </div>
             </div>
           </div>
         </div>
