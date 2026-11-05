@@ -181,7 +181,7 @@ export default function LandingPage() {
   return (
     <main className="relative min-h-screen" id="main">
       {/* Hero Section */}
-      <section className="relative z-10 w-full h-screen overflow-hidden flex items-center justify-center" id="home">
+      <section className="relative z-10 w-full h-screen overflow-hidden flex items-center justify-center pt-20" id="home">
         <div className="absolute inset-0 z-0 opacity-40">
           <canvas ref={canvasRef} id="shader-canvas-ANIMATION_3" style={{ display: 'block', width: '100%', height: '100%' }} />
         </div>
@@ -227,7 +227,7 @@ export default function LandingPage() {
         </div>
 
         <a
-          className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 animate-bounce opacity-50 hover:opacity-100 transition-opacity"
+          className="hero-scroll-cue absolute bottom-8 left-1/2 z-20 -translate-x-1/2 animate-bounce opacity-50 hover:opacity-100 transition-opacity"
           href="#about"
           aria-label="Scroll to about section"
         >

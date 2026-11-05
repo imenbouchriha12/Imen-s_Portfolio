@@ -67,6 +67,11 @@ body { background-color: #0b1326; color: #dae2fd; overflow-x: hidden; }
 @keyframes ringSpin { to { transform: rotate(360deg); } }
 @keyframes heroFade { from { opacity: 0; } to { opacity: 1; } }
 
+.hero-scroll-cue { display: none; }
+@media (min-width: 1024px) and (min-height: 880px) {
+  .hero-scroll-cue { display: flex; }
+}
+
 .reveal-on-scroll { opacity: 0; transform: translateY(50px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
 .reveal-on-scroll.active { opacity: 1; transform: translateY(0); }
 
