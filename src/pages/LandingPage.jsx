@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import AboutSection from '../components/AboutSection'
 import JourneySection from '../components/JourneySection'
+import PrintWall from '../components/PrintWall'
 import ProjectsSection from '../components/ProjectsSection'
-import SystemSection from '../components/SystemSection'
+import StackAtlas from '../components/StackAtlas'
 import TechMarquee from '../components/TechMarquee'
-import ToolkitRack from '../components/ToolkitRack'
 import useRevealOnScroll from '../hooks/useRevealOnScroll'
 import useTunisTime from '../hooks/useTunisTime'
 import { stats } from '../data/projects'
@@ -45,14 +45,14 @@ export default function LandingPage() {
         id="home"
         className="relative flex min-h-[100svh] items-center overflow-hidden pb-16 pt-28 md:pt-32"
       >
-        <div className="blueprint-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+        <div className="dot-grid pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="pointer-events-none absolute -top-40 left-1/2 h-[560px] w-[820px] -translate-x-1/2 rounded-full bg-primary/[0.09] blur-[170px]" aria-hidden="true" />
         <div className="pointer-events-none absolute -bottom-24 right-0 h-[420px] w-[420px] rounded-full bg-secondary/[0.08] blur-[150px]" aria-hidden="true" />
 
-        <div className="relative mx-auto grid w-full max-w-container-max grid-cols-1 items-center gap-12 px-margin-x lg:grid-cols-12">
-          <div className="lg:col-span-7">
+        <div className="relative mx-auto grid w-full max-w-container-max grid-cols-1 items-center gap-12 px-margin-x xl:grid-cols-12 xl:gap-10">
+          <div className="xl:col-span-6">
             <div className="animate-fade-in-up flex flex-wrap items-center gap-x-4 gap-y-2" style={{ animationDelay: '0.05s' }}>
-              <span className="eyebrow">Drawing 001 / Full-stack engineer</span>
+              <span className="eyebrow">Full-stack software engineer</span>
               <span className="hidden items-center gap-2 font-label-caps text-[8px] text-tertiary sm:flex">
                 <span className="status-dot" />
                 TUNIS, TUNISIA
@@ -70,26 +70,18 @@ export default function LandingPage() {
               </span>
             </h1>
 
-            <div
-              className="animate-fade-in-up mt-6 flex items-center gap-3 font-label-caps text-[8px] text-on-surface-variant/50"
+            <p
+              className="animate-fade-in-up mt-6 max-w-xl font-body-lg text-body-lg text-on-surface-variant"
               style={{ animationDelay: '0.32s' }}
             >
-              <span className="h-px w-8 bg-white/20" aria-hidden="true" />
-              <span>LOAD-BEARING SOFTWARE</span>
-              <span className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" aria-hidden="true" />
-            </div>
-
-            <p
-              className="animate-fade-in-up mt-5 max-w-xl font-body-lg text-body-lg text-on-surface-variant"
-              style={{ animationDelay: '0.42s' }}
-            >
-              From the interface people click to the infrastructure they never see. I design, build
-              and ship full-stack products with React, Angular, NestJS, Spring Boot and .NET.
+              I'm Imen. I design, build and ship full-stack products — from the interface people
+              click to the infrastructure they never see — with React, Angular, NestJS, Spring Boot
+              and .NET.
             </p>
 
             <div
               className="animate-fade-in-up mt-9 flex flex-col gap-3 sm:flex-row"
-              style={{ animationDelay: '0.52s' }}
+              style={{ animationDelay: '0.42s' }}
             >
               <a
                 href="#projects"
@@ -115,7 +107,7 @@ export default function LandingPage() {
 
             <div
               className="animate-fade-in-up mt-10 flex flex-wrap items-center gap-x-4 gap-y-2"
-              style={{ animationDelay: '0.62s' }}
+              style={{ animationDelay: '0.52s' }}
             >
               <span className="font-label-caps text-[8px] text-on-surface-variant/50">CURRENTLY</span>
               <span className="h-px w-6 bg-white/[0.15]" aria-hidden="true" />
@@ -125,8 +117,8 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="animate-fade-in-up lg:col-span-5" style={{ animationDelay: '0.32s' }}>
-            <SystemSection />
+          <div className="animate-fade-in-up xl:col-span-6" style={{ animationDelay: '0.38s' }}>
+            <PrintWall />
           </div>
         </div>
 
@@ -168,7 +160,7 @@ export default function LandingPage() {
 
       <ProjectsSection />
 
-      <ToolkitRack />
+      <StackAtlas />
 
       {/* Contact */}
       <section id="contact" className="reveal-on-scroll relative overflow-hidden bg-background py-stack-lg">
