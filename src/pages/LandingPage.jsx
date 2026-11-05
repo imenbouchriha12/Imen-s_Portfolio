@@ -3,6 +3,7 @@ import ProjectsSection from '../components/ProjectsSection'
 import JourneySection from '../components/JourneySection'
 import TechMarquee from '../components/TechMarquee'
 import HoloCard from '../components/HoloCard'
+import DecayCard from '../components/DecayCard'
 import { stats } from '../data/projects'
 
 const skillCategories = [
@@ -26,7 +27,6 @@ const workflow = [
 export default function LandingPage() {
   const canvasRef = useRef(null)
   const typingRef = useRef(null)
-  const visualRef = useRef(null)
   const [formState, setFormState] = useState('idle')
 
   useEffect(() => {
@@ -106,38 +106,6 @@ export default function LandingPage() {
     return () => {
       clearTimeout(loadTimeout)
       clearTimeout(timeoutId)
-    }
-  }, [])
-
-  useEffect(() => {
-    const el = visualRef.current
-    if (!el) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    if (!window.matchMedia('(hover: hover)').matches) return
-
-    let frame
-    const onMove = (e) => {
-      const rect = el.getBoundingClientRect()
-      const x = (e.clientX - rect.left) / rect.width - 0.5
-      const y = (e.clientY - rect.top) / rect.height - 0.5
-      cancelAnimationFrame(frame)
-      frame = requestAnimationFrame(() => {
-        el.style.setProperty('--rx', `${(-y * 5).toFixed(2)}deg`)
-        el.style.setProperty('--ry', `${(x * 7).toFixed(2)}deg`)
-      })
-    }
-    const onLeave = () => {
-      cancelAnimationFrame(frame)
-      el.style.setProperty('--rx', '0deg')
-      el.style.setProperty('--ry', '0deg')
-    }
-
-    el.addEventListener('pointermove', onMove)
-    el.addEventListener('pointerleave', onLeave)
-    return () => {
-      cancelAnimationFrame(frame)
-      el.removeEventListener('pointermove', onMove)
-      el.removeEventListener('pointerleave', onLeave)
     }
   }, [])
 
@@ -244,31 +212,35 @@ export default function LandingPage() {
           </div>
 
           <div className="lg:col-span-5 order-1 lg:order-2">
-            <div ref={visualRef} className="hero-visual relative mx-auto w-[230px] sm:w-[310px] md:w-[340px] lg:w-full lg:max-w-[350px] xl:max-w-[390px]">
-              <div className="hero-frame" aria-hidden="true" />
+            <div className="hero-visual relative mx-auto w-[276px] sm:w-[336px] md:w-[372px] lg:w-full lg:max-w-[412px] xl:max-w-[448px]">
               <div className="hero-glow" aria-hidden="true" />
-              <div className="hero-window-in">
-                <figure className="hero-window">
-                  <div className="hero-window-bar">
-                    <span className="hero-window-path">~/imen-bouchriha</span>
-                    <span className="hero-window-live">
-                      <span className="status-dot" />
-                      live
-                    </span>
+              <div className="hero-decay-in">
+                <DecayCard
+                  image="/imen.png"
+                  width={448}
+                  height={560}
+                  intensity={0.45}
+                  sensitivity={0.5}
+                  hoverDecay={0.05}
+                  recovery={0.6}
+                  idle={0.3}
+                  grain={0.25}
+                  detail={5}
+                  pattern={4}
+                  flow={0}
+                  chroma={0.35}
+                  travel={34}
+                  tilt={7}
+                  scope="window"
+                  radius={22}
+                  className="hero-decay"
+                  style={{ width: '100%', height: 'auto', aspectRatio: '4 / 5' }}
+                >
+                  <div className="hero-decay-caption">
+                    <span className="hero-decay-path">~/imen-bouchriha</span>
+                    <span className="hero-decay-layers">Interface &middot; API &middot; Data &middot; Infra</span>
                   </div>
-                  <div className="hero-window-screen">
-                    <img alt="Portrait of Imen Bouchriha" className="hero-portrait" src="/imen.png" />
-                    <span className="hero-scanline" aria-hidden="true" />
-                  </div>
-                  <div className="hero-window-footer">
-                    {['Interface', 'API', 'Data', 'Infra'].map((layer, i) => (
-                      <div className="hero-layer" key={layer} style={{ '--layer-delay': `${i * 0.5}s` }}>
-                        <span className="hero-layer-bar" aria-hidden="true" />
-                        <span className="hero-layer-label">{layer}</span>
-                      </div>
-                    ))}
-                  </div>
-                </figure>
+                </DecayCard>
               </div>
             </div>
           </div>
@@ -307,22 +279,25 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
             <div className="lg:col-span-5">
               <div className="flex justify-center">
-                <HoloCard
-                  image="/imen.png"
-                  alt="Portrait of Imen Bouchriha"
-                  preset="shards"
-                  foilColor="#d0bcff"
-                  intensity={0.42}
-                  edgeSparkle={0.3}
-                  frame={3}
-                  glare={0.35}
-                  tiltMax={10}
-                  hoverScale={1.03}
-                  radius={18}
-                  width={390}
-                  idle
-                  shadow
-                />
+                <div className="relative">
+                  <div className="holo-halo" aria-hidden="true" />
+                  <HoloCard
+                    image="/imen.png"
+                    alt="Portrait of Imen Bouchriha"
+                    preset="shards"
+                    foilColor="#d0bcff"
+                    intensity={0}
+                    edgeSparkle={0.35}
+                    frame={3}
+                    glare={0}
+                    tiltMax={8}
+                    hoverScale={1.02}
+                    radius={18}
+                    width={390}
+                    idle
+                    shadow
+                  />
+                </div>
               </div>
               <div className="mt-10 space-y-4 text-center lg:text-left">
                 <div>
@@ -411,7 +386,7 @@ export default function LandingPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-gutter mt-stack-lg" id="skills-grid">
               {skillCategories.map((category) => (
                 <div key={category.title} className="skill-card glass-card shine-effect bg-surface-container/50 p-stack-md rounded-xl flex flex-col items-center justify-center gap-stack-sm group hover:border-primary/50 transition-all cursor-default min-h-[140px] relative overflow-hidden">
-                  <span className="material-symbols-outlined text-5xl text-primary transition-all duration-500 group-hover:opacity-0">{category.icon}</span>
+                  <span className="material-symbols-outlined skill-icon text-5xl transition-all duration-500 group-hover:opacity-0">{category.icon}</span>
                   <span className="font-label-caps text-label-caps transition-all duration-500 group-hover:opacity-0">{category.title}</span>
                   <div className="absolute inset-0 flex flex-col items-center justify-center p-3 opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none">
                     <div className="flex flex-wrap gap-1.5 justify-center">
